@@ -2,7 +2,7 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import { useAuth } from './AuthContext';
 
-const baseURL = 'https://veyoo-server-1.onrender.com';
+const baseURL = 'https://veyoo-backend-server.onrender.com';
 let _instance = null;
 
 const useVeYooAxios = () => {
