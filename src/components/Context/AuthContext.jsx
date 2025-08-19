@@ -11,7 +11,7 @@ export const useAuth = () => {
   return context;
 };
 
-const BaseUrl = 'http://127.0.0.1:8000';
+const BaseUrl = 'https://veyoo-backend-server.onrender.com';
 
 export const AuthProvide = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
