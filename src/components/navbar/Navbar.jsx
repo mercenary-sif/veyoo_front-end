@@ -3,7 +3,7 @@ import logo from '../../assets/VEYoo_Logo.png';
 import { FaUserCircle } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import { RiLogoutCircleRLine, RiMenu3Line, RiCloseLine } from 'react-icons/ri';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ThemeToggle from '../Context/ThemeToggle';
 import { useAuth } from '../../components/Context/AuthContext';
 const Navbar = () => {
@@ -11,7 +11,21 @@ const Navbar = () => {
    const { logout } = useAuth();
    const [menu, setMenu] = useState(false);
    const isLogin = true; 
-  
+   
+     useEffect(() => {
+       if (
+         menu
+       ) {
+         document.body.style.overflow = "hidden";
+       } else {
+         document.body.style.overflow = "auto";
+       }
+   
+       // Cleanup function
+       return () => {
+         document.body.style.overflow = "auto";
+       };
+     }, [menu]);
    const handleLogout = () => {
     logout();
     navigate('/');
@@ -97,13 +111,15 @@ const Navbar = () => {
             <p className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-subtext dark:hover:text-blue-400" onClick={() => navigate('/notifications')}>
               Notifications
             </p>
+             <div className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-subtext dark:hover:text-blue-400 flex justify-center items-center gap-[1rem] mt-auto">
+               <ThemeToggle/>
+                <p> Theme</p>
+            </div>
             <p className="cursor-pointer text-gray-700 dark:text-gray-300 hover:text-subtext dark:hover:text-blue-400 flex justify-center items-center gap-[1rem] mt-auto"  onClick={handleLogout}>
               <RiLogoutCircleRLine size={22} className="hover:text-subtext dark:hover:text-blue-400 cursor-pointer transition-colors duration-300" /> 
               LogOut
             </p>
-            <div className="w-full flex justify-start items-start px-3">
-               <ThemeToggle/>
-            </div>
+           
           </div>
         </div>
       )}

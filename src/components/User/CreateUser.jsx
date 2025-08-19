@@ -3,7 +3,7 @@ import { X, User, Mail, Phone, Shield, Eye, EyeOff } from 'lucide-react';
 import useVeYooAxios from '../Context/useVeYooAxios';
 import { Loading, Message } from '../export';
 
-const CreateUser = ({ isOpen, onClose, onUserCreated}) => {
+const CreateUser = ({ isOpen, onClose, onUserCreated , addCreatedUser}) => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -88,7 +88,9 @@ const CreateUser = ({ isOpen, onClose, onUserCreated}) => {
       setIsSuccess(true);
       setShowMessage(true)
       setTimeout(() => {
-        onUserCreated(transformedData);
+        if (addCreatedUser){
+          onUserCreated(transformedData);
+        }
         handleClose();
       }, 2000);
     } catch (error) {
@@ -104,6 +106,11 @@ const CreateUser = ({ isOpen, onClose, onUserCreated}) => {
       setTimeout(() => {
         setShowMessage(false);
       }, 2000);
+    }finally{
+    setTimeout(() => {
+        handleClose();
+      }, 2000);
+      
     }
   };
 

@@ -247,7 +247,13 @@ const UserTable = ({ users, onViewUser,  onDeleteUser, onToggleStatus ,onChangeR
                       >
                         <Eye className="h-5 w-5" />
                       </button>
-                     
+                      <button
+                      onClick={() => onChangeRole(user)}
+                      title="Changer le rôle"
+                      className="text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 p-2"
+                    >
+                      <Shield className="h-5 w-5" />
+                    </button>
                     </div>
                     
                     <div className="flex space-x-2">

@@ -57,7 +57,7 @@ const Footer = () => {
         
         <div className="flex flex-col justify-start items-start gap-[1rem]">
           <h4 className='text-[18px] font-semibold text-gray-900 dark:text-white'>Contact</h4>
-          <p className="text-gray-600 dark:text-gray-400">veyoo@gmail.com</p>
+          <p className="text-gray-600 dark:text-gray-400">veyooplatforme@gmail.com</p>
           <p className="text-gray-600 dark:text-gray-400">+3312329320</p>
           <p 
             className="cursor-pointer text-gray-600 dark:text-gray-400 hover:text-subtext" 

@@ -6,7 +6,7 @@ import { RiLoginCircleLine } from "react-icons/ri";
 import { useAuth } from '../../components/Context/AuthContext';
 import { useEffect, useState } from 'react';
 import { Loading, Message } from '../../components/export';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import EmailVerificationModal from '../../Dashboard/ProfileManagement/EmailVerificationModal';
 import CodeVerificationModal from '../../Dashboard/ProfileManagement/CodeVerificationModal';
 import ChangePasswordModal from '../../Dashboard/ProfileManagement/ChangePasswordModal';
@@ -20,7 +20,6 @@ const Authentication = () => {
   const [msgContent, setMsgContent] = useState('');
   const [msgSuccess, setMsgSuccess] = useState(true);
   const navigate = useNavigate();
-  const location = useLocation();
 
   // State for password reset modals
   const [isEmailVerificationOpen, setIsEmailVerificationOpen] = useState(false);
@@ -30,45 +29,26 @@ const Authentication = () => {
 
   const [resetEmail, setResetEmail] = useState('');
 
-  useEffect(() => {
-    if (location.state?.message) {
-      setMsgContent(location.state.message);
-      setMsgSuccess(location.state.isSuccess);
-      setShowMsg(true);
-
-      const timer = setTimeout(() => {
-        setShowMsg(false);
-        navigate(location.pathname, { replace: true });
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [location.state, navigate, location.pathname]);
-
   const handleLogin = async () => {
     setIsLoading(true);
     const result = await login(email, password);
     setIsLoading(false);
     if (result === 'Connexion réussie.') {
-      const role = hasRole();
-      const targetPath = role === 'inspector' ? '/Accueil' : '/dashboard';
       setMsgContent(result);
       setMsgSuccess(true);
       setShowMsg(true);
-
-      const timer = setTimeout(() => {
-        navigate(targetPath, {
-          state: { message: result, isSuccess: true },
-        });
-        setShowMsg(false);
-      }, 800);
-
-      return () => clearTimeout(timer);
+      const role = hasRole();
+      const targetPath = role === 'inspector' ? '/Accueil' : '/dashboard';
+     
+       setTimeout(() => {
+         setShowMsg(false);
+         navigate(targetPath);
+      }, 2000);    
     } else {
       setMsgContent(result);
       setMsgSuccess(false);
       setShowMsg(true);
-
+       
       const timer = setTimeout(() => {
         setShowMsg(false);
       }, 4000);

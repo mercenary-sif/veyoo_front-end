@@ -156,15 +156,7 @@ const UserSupportContainer = ({ user }) => {
     }
   };
 
-  const addAttachmentUrl = () => {
-    const url = prompt("Entrez l'URL de la pièce jointe :");
-    if (url) {
-      setFormData(prev => ({
-        ...prev,
-        attachments: [...prev.attachments, { kind: 'url', url, name: url }]
-      }));
-    }
-  };
+
 
   const triggerFilePicker = () => {
     fileInputRef.current?.click();
@@ -332,14 +324,7 @@ const UserSupportContainer = ({ user }) => {
                       <Upload className="h-4 w-4" />
                       <span>Uploader un fichier</span>
                     </button>
-                    <button
-                      type="button"
-                      onClick={addAttachmentUrl}
-                      className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <FileText className="h-4 w-4" />
-                      <span>Ajouter via URL</span>
-                    </button>
+                    
                   </div>
 
                   <input

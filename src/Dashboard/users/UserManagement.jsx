@@ -317,6 +317,7 @@ const UserManagement = () => {
                 isOpen={isCreateUserOpen}
                 onClose={() => setIsCreateUserOpen(false)}
                 onUserCreated={handleCreateOrEdit}
+                addCreatedUser={true}
               />
 
               <ChangeUserRoleModal

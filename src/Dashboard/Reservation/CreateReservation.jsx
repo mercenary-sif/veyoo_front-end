@@ -401,6 +401,15 @@ const CreateReservationModal = ({ isOpen, onClose, onSubmit, users: propUsers = 
 
   const today = new Date().toISOString().split('T')[0];
 
+  // --- NEW: filter users to show only inspectors (case-insensitive) and prefer active ones ---
+  const inspectors = (users || []).filter((user) => {
+    const roleVal = String(user.role || user.account_type || user.role_name || '').toLowerCase();
+    const statusVal = String(user.status || '').toLowerCase();
+    const isInspector = roleVal === 'inspector';
+    const isActive = !statusVal || statusVal === 'active';
+    return isInspector && isActive;
+  });
+
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Message & Loading */}
@@ -440,7 +449,7 @@ const CreateReservationModal = ({ isOpen, onClose, onSubmit, users: propUsers = 
               </div>
             </div>
 
-            {/* Assigned To */}
+            {/* Assigned To - only inspectors */}
             <div>
               <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 <UserIcon className="h-4 w-4" />
@@ -453,8 +462,8 @@ const CreateReservationModal = ({ isOpen, onClose, onSubmit, users: propUsers = 
                 className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${errors.assignedToId ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}`}
                 disabled={isActionLoading || fetchLoading}
               >
-                <option value="">Sélectionner un utilisateur</option>
-                {(users || []).filter((user) => String(user.status || '').toLowerCase() === 'active' || !user.status).map((user) => (
+                <option value="">Sélectionner un inspecteur</option>
+                {inspectors.map((user) => (
                   <option key={user.id} value={user.id}>
                     {user.name || user.username || user.email} {user.role ? `- ${user.role}` : ''} {user.email ? `(${user.email})` : ''}
                   </option>
@@ -464,6 +473,12 @@ const CreateReservationModal = ({ isOpen, onClose, onSubmit, users: propUsers = 
               {/* Inline fetch error helper for users */}
               {fetchError && (!users || users.length === 0) && (
                 <p className="mt-1 text-sm text-red-600 dark:text-red-400">Erreur lors du chargement des utilisateurs : {fetchError}</p>
+              )}
+              {/* If fetch succeeded but no inspectors found */}
+              {!fetchLoading && inspectors.length === 0 && (
+                <p className="mt-1 text-sm text-yellow-600 dark:text-yellow-400">
+                  Aucun inspecteur disponible. Vérifiez la liste des utilisateurs ou contactez un administrateur.
+                </p>
               )}
             </div>
 
