@@ -778,7 +778,7 @@ const handleDownloadPDF = async (precheck) => {
           {/* Filter Tabs and Table */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
             <div className="border-b border-gray-200 dark:border-gray-700">
-              <nav className="flex space-x-8 px-6 overflow-x-auto">
+              <nav className="grid grid-cols-2 gap-4 md:flex md:flex-row space-x-8 px-6 overflow-x-auto">
                 {[
                   { key: 'all', label: 'Tous', count: statusCounts.all },
                   { key: 'pending', label: 'En attente', count: statusCounts.pending },
